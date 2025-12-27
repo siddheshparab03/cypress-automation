@@ -1,12 +1,18 @@
 ///<reference types='cypress'/>
 
-describe('End to End Ecommerce Test', () => {
-    it('submits an order', () => {
-        const productName = 'Nokia Edge';
+describe('End to End Ecommerce Test', function() {
+
+    before(function () {
+        cy.fixture('example').then(function (data) {
+            this.data = data;
+        })
+    })
+    it('submits an order', function() {
+        const productName = this.data.productName;
 
         cy.visit('https://rahulshettyacademy.com/loginpagePractise/');
-        cy.get('#username').type('rahulshettyacademy');
-        cy.get('#password').type('learning');
+        cy.get('#username').type(this.data.username);
+        cy.get('#password').type(this.data.password);
         cy.contains('Sign In').click();
 
         cy.get('.mb-3').should('have.length', 4);
